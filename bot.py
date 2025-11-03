@@ -4,6 +4,8 @@ from aiogram.utils import executor
 
 # 从环境变量读取 Token
 BOT_TOKEN = os.getenv('BOT_TOKEN')
+if not BOT_TOKEN:
+    raise ValueError('BOT_TOKEN environment variable is required')
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
