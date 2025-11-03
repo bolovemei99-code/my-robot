@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 
 # 从环境变量读取 Token
-BOT_TOKEN = os.getenv('8424353653:AAFAgNubsDb1xwGEtwkelH6OYc3JwdynD5Y')
+BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
