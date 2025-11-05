@@ -18,7 +18,6 @@ GROUPS_FILE = Path("groups.json")
 # ======= 3. 记账存放文件 =======
 LEDGER_FILE = Path("ledger.json")
 
-<<<<<<< HEAD:bot.py.txt
 
 # ================== 工具：钱的格式化 ==================
 def fmt_money(v: float) -> str:
