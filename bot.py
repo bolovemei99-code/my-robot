@@ -18,7 +18,6 @@ GROUPS_FILE = Path("groups.json")
 # ======= 3. 记账存放文件 =======
 LEDGER_FILE = Path("ledger.json")
 
-<<<<<<< HEAD:bot.py.txt
 
 # ================== 工具：钱的格式化 ==================
 def fmt_money(v: float) -> str:
@@ -291,8 +290,3 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-=======
-if __name__ == '__main__':
-    print("机器人正在启动...")
-    executor.start_polling(dp, skip_updates=True)
->>>>>>> c7ec2b595ac0db5981636046d576083039ba4147:bot.py
