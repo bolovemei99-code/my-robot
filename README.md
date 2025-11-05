@@ -29,6 +29,45 @@ pip install -r requirements.txt
 python bot.py
 ```
 
+### Railway 部署（推荐）
+
+Railway 是一个现代化的云平台，支持自动部署和持续集成。
+
+#### 方法一：通过 GitHub 连接（推荐）
+
+1. 访问 [Railway.app](https://railway.app/) 并登录
+2. 点击 "New Project" → "Deploy from GitHub repo"
+3. 选择 `bolovemei99-code/my-robot` 仓库
+4. Railway 会自动检测配置并开始部署
+5. 部署完成后，机器人会自动运行
+
+**优势**：
+- ✅ 自动部署：每次推送到 main 分支都会自动重新部署
+- ✅ 免费额度：每月 $5 的免费使用额度
+- ✅ 持久化存储：数据文件会保留
+
+#### 方法二：使用 Railway CLI
+
+1. 安装 Railway CLI：
+```bash
+npm install -g @railway/cli
+```
+
+2. 登录：
+```bash
+railway login
+```
+
+3. 初始化项目：
+```bash
+railway init
+```
+
+4. 部署：
+```bash
+railway up
+```
+
 ### Heroku 部署
 
 1. 创建 Heroku 应用：
@@ -54,6 +93,7 @@ heroku logs --tail
 ### 其他平台部署
 
 本项目包含以下文件以支持各种部署平台：
+- `railway.json` - Railway 配置文件
 - `Procfile` - Heroku/Railway 等平台的进程配置
 - `requirements.txt` - Python 依赖
 - `runtime.txt` - Python 版本指定
@@ -71,6 +111,7 @@ heroku logs --tail
 - `bot.py` - 主程序
 - `groups.json` - 群列表存储（自动生成）
 - `ledger.json` - 账本数据（自动生成）
+- `railway.json` - Railway 配置文件
 - `Procfile` - 部署配置
 - `requirements.txt` - 依赖列表
 - `runtime.txt` - Python 版本
