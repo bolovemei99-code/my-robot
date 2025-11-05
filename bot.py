@@ -127,7 +127,7 @@ def get_group_ledger(chat_id: int):
 # ================== 群内记账处理 ==================
 
 # ✅ 支持小数：+100.5 / -87.6 / +100 / -200 备注...
-ACCOUNTING_PATTERN = re.compile(r'^[+-]\s*(\d+(?:\.\d+)?)(?:\s+(.*))?$', re.S)
+ = re.compile(r'^[+-]\s*(\d+(?:\.\d+)?)(?:\s+(.*))?$', re.S)
 
 
 async def handle_group_accounting(message: Message):
