@@ -1,2 +1,4 @@
 __pycache__/
 *.pyc
+groups.json
+ledger.json
