@@ -4,7 +4,9 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 
 # 从环境变量读取 Token
-BOT_TOKEN = os.getenv('BOT_TOKEN', '8424353653:AAFAgNubsDb1xwGEtwkelH6OYc3JwdynD5Y')
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+if not BOT_TOKEN:
+    raise ValueError("BOT_TOKEN environment variable is required")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
