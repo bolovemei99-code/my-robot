@@ -6,7 +6,7 @@ from aiogram.filters import Command
 # 从环境变量读取 Token
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 if not BOT_TOKEN:
-    raise ValueError("BOT_TOKEN environment variable is required")
+    raise ValueError("BOT_TOKEN environment variable is required. Please set it with your Telegram bot token.")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
