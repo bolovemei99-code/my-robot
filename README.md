@@ -123,18 +123,28 @@ python3 bot.py
 
 ## 安全提示
 
-**重要**：请不要将 Bot Token 直接提交到公共仓库！
+**重要**：强烈建议使用环境变量来保护你的 Bot Token！
 
-建议使用环境变量：
-```python
-import os
-BOT_TOKEN = os.getenv("BOT_TOKEN", "your_default_token")
-```
+本项目已支持环境变量配置。在生产环境中，请设置 `BOT_TOKEN` 环境变量：
 
 Heroku 设置环境变量：
 ```bash
 heroku config:set BOT_TOKEN=你的token
 ```
+
+Linux/Mac 设置环境变量：
+```bash
+export BOT_TOKEN="你的token"
+python3 bot.py
+```
+
+Windows 设置环境变量：
+```bash
+set BOT_TOKEN=你的token
+python bot.py
+```
+
+如果不设置环境变量，bot.py 会使用代码中的默认 token（仅用于开发测试）。
 
 ## 许可证
 

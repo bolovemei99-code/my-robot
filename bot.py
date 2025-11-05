@@ -1,5 +1,6 @@
 import asyncio
 import json
+import os
 import re
 from datetime import datetime
 from pathlib import Path
@@ -10,7 +11,8 @@ from aiogram.types import Message, ChatMemberUpdated
 from aiogram.client.default import DefaultBotProperties
 
 # ======= 1. 填你的 Bot Token =======
-BOT_TOKEN = "8424353653:AAFAgNubsDb1xwGEtwkelH6OYc3JwdynD5Y"
+# 优先使用环境变量，如果没有设置则使用默认值
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8424353653:AAFAgNubsDb1xwGEtwkelH6OYc3JwdynD5Y")
 
 # ======= 2. 群列表存放文件 =======
 GROUPS_FILE = Path("groups.json")
