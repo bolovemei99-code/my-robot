@@ -5,7 +5,7 @@ import sqlite3
 import re
 
 app = Flask(__name__)
-TOKEN = os.getenv('TG_TOKEN')
+TOKEN = os.getenv('8203814161:AAEjpp8VxdErKUwiSZCUIABLTqAzZ-lTWaY')
 bot = telebot.TeleBot(TOKEN)
 
 # 数据库
