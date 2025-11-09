@@ -3,9 +3,11 @@ import telebot
 import os
 import sqlite3
 import re
+import requests
+from datetime import datetime
 
 app = Flask(__name__)
-TOKEN = os.getenv('8203814161:AAEjpp8VxdErKUwiSZCUIABLTqAzZ-lTWaY')
+TOKEN = os.getenv('TG_TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
 # 数据库
@@ -38,6 +40,21 @@ def webhook():
     update = request.get_json()
     bot.process_new_updates([telebot.types.Update.de_json(update)])
     return '', 200
+
+# MCP AI 聊天
+@bot.message_handler(commands=['mcp'])
+def mcp_chat(message):
+    query = ' '.join(message.text.split()[1:]) or "你好"
+    try:
+        response = requests.post(
+            "http://localhost:8000/v1/chat/completions",
+            json={"messages": [{"role": "user", "content": query}]},
+            timeout=10
+        )
+        reply = response.json().get("choices", [{}])[0].get("message", {}).get("content", "AI 思考中...")
+        bot.reply_to(message, f"MCP: {reply}")
+    except Exception as e:
+        bot.reply_to(message, f"MCP 错误: {str(e)}")
 
 # 自动回复
 @bot.message_handler(content_types=['text'])
@@ -142,9 +159,10 @@ def apply_template(message):
 # 帮助
 @bot.message_handler(commands=['help'])
 def help_cmd(message):
-    bot.reply_to(message, "🎉 命令: /add 10 午饭 /sub 5 咖啡 /balance /setquick hi 你好 /getquick /mass 123 消息 /kick /ban /template 欢迎 {name} /help")
+    bot.reply_to(message, "🎉 命令: /mcp 你好 (AI对话) /add 10 午饭 /sub 5 咖啡 /balance /setquick hi 你好 /getquick /mass 123 消息 /kick /ban /template 欢迎 {name} /help")
 
 if __name__ == "__main__":
     bot.remove_webhook()
     bot.set_webhook(url=f"https://{os.getenv('RAILWAY_STATIC_URL')}/webhook")
-    print(f"Webhook 17:18 +07")
+    print("MCP Bot 启动！")
+    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 8080)))

@@ -1,1 +1,4 @@
+Flask
 pyTelegramBotAPI
+mcp-server
+requests
