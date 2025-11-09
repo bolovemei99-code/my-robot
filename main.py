@@ -1,9 +1,12 @@
 import telebot
 import os
-from datetime import datetime
+from flask import Flask, request
 
 TOKEN = os.getenv('TG_TOKEN')
+WEBHOOK_URL = os.getenv('RAILWAY_PUBLIC_DOMAIN', '')
+
 bot = telebot.TeleBot(TOKEN)
+app = Flask(__name__)
 
 # 自动回复规则
 REPLIES = {
@@ -23,5 +26,30 @@ def auto_reply(message):
     # 默认回复
     bot.reply_to(message, "我听到了！")
 
-print("Telegram 机器人已启动！")
-bot.polling()
+@app.route('/' + TOKEN, methods=['POST'])
+def webhook():
+    if request.headers.get('content-type') == 'application/json':
+        json_string = request.get_data().decode('utf-8')
+        update = telebot.types.Update.de_json(json_string)
+        bot.process_new_updates([update])
+        return '', 200
+    else:
+        return '', 403
+
+@app.route('/setWebhook', methods=['GET'])
+def set_webhook():
+    webhook_url = f"https://{WEBHOOK_URL}/{TOKEN}"
+    result = bot.set_webhook(url=webhook_url)
+    if result:
+        return f"Webhook set to {webhook_url}", 200
+    else:
+        return "Failed to set webhook", 500
+
+@app.route('/')
+def index():
+    return "Telegram Bot is running!", 200
+
+if __name__ == '__main__':
+    print("Telegram 机器人已启动！")
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
