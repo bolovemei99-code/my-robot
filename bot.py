@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 
 # 从环境变量读取 Token
-BOT_TOKEN = os.getenv('BOT_TOKEN')
+BOT_TOKEN = os.getenv('8328672714:AAFQVLZMJ1VWsrTV_CXZ6820tqWTW3ryF44')
 if not BOT_TOKEN:
     raise ValueError('BOT_TOKEN environment variable is required')
 
