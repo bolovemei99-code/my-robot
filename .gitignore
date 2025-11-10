@@ -38,6 +38,13 @@ data.db
 .env.local
 .env.*.local
 
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
 # IDE
 .vscode/
 .idea/
@@ -45,6 +52,10 @@ data.db
 *.swo
 *~
 .DS_Store
+
+# Environment variables
+.env
+.env.local
 
 # Logs
 *.log
@@ -60,3 +71,9 @@ quick.json
 # Temporary files
 /tmp/
 *.tmp
+# Docker
+docker-compose.override.yml
+
+# OS
+.DS_Store
+Thumbs.db
