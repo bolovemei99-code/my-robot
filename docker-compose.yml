@@ -1,16 +1,37 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis/redis-stack:latest
+    container_name: my-robot-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+  
   telegram-bot:
     build: .
     container_name: my-robot
     restart: unless-stopped
     environment:
       - TG_TOKEN=${TG_TOKEN}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     volumes:
       - ./logs:/app/logs
+    depends_on:
+      - redis
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+
+volumes:
+  redis-data:
