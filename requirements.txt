@@ -1,2 +1,11 @@
 pyTelegramBotAPI
 Flask
+Flask
+pyTelegramBotAPI
+pyTelegramBotAPI
+mcp-server
+requests
+pyTelegramBotAPI
+Flask
+requests
+Flask
