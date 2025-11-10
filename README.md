@@ -84,13 +84,21 @@ python main.py
 - Railway - 部署平台
 # My Robot - Telegram Bot
 
-一个功能强大的 Telegram 机器人，支持记账、群管理、快捷回复、第三方API集成等功能。
+一个功能强大的 Telegram 机器人，支持记账、群管理、快捷回复、第三方API集成和 Redis 数据存储等功能。
 
-A powerful Telegram bot with accounting, group management, quick reply, and third-party API integration features.
+A powerful Telegram bot with accounting, group management, quick reply, third-party API integration, and Redis storage features.
 
 📚 **[查看详细功能文档 / View Detailed Features](FEATURES.md)**
 
+📦 **[Redis 集成文档 / Redis Integration](REDIS.md)**
+
 ## 功能特性 / Features
+
+### 💾 数据存储 / Data Storage
+- ✅ Redis Stack 集成
+- ✅ RedisJSON 原生 JSON 支持
+- ✅ 高性能键值存储
+- ✅ 数据持久化
 
 ### 📊 记账功能 / Accounting
 - ✅ 自动识别金额并记账
@@ -307,11 +315,14 @@ python main.py
 ```
 my-robot/
 ├── main.py              # 主程序文件 / Main program
+├── redis_client.py      # Redis 客户端 / Redis client
 ├── requirements.txt     # Python依赖 / Dependencies
 ├── Procfile            # 部署配置 / Deployment config
+├── docker-compose.yml  # Docker Compose 配置
 ├── mcp.json            # MCP服务器配置 / MCP config
 ├── README.md           # 项目说明 / Project readme
 ├── FEATURES.md         # 功能详细文档 / Detailed features
+├── REDIS.md            # Redis 集成文档 / Redis integration
 ├── LICENSE             # MIT许可证 / License
 ├── .env.example        # 环境变量示例 / Env example
 ├── .gitignore          # Git忽略文件 / Git ignore
@@ -326,15 +337,25 @@ my-robot/
 - **pyTelegramBotAPI**: Telegram Bot API封装
 - **Flask**: Web框架（处理Webhook）
 - **SQLite3**: 轻量级数据库
+- **Redis Stack**: 高性能键值存储
+- **RedisJSON**: 原生 JSON 数据类型
 - **Requests**: HTTP请求库
 
 ### 数据库设计
+
+#### SQLite 数据表
 - `accounts`: 记账数据表
 - `users`: 用户信息表
 - `groups`: 群组信息表
 - `message_log`: 消息日志表
 - `scheduled_messages`: 定时消息表
 - `quick`: 快捷回复表
+
+#### Redis 数据存储
+- 键值对存储（KV Store）
+- JSON 文档存储（RedisJSON）
+- 会话数据缓存
+- 实时数据处理
 
 ### API集成
 - **OpenWeatherMap**: 天气数据
@@ -348,6 +369,12 @@ my-robot/
 ```bash
 # 必需 / Required
 BOT_TOKEN=your_telegram_bot_token
+
+# Redis 配置 / Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_DB=0
+REDIS_PASSWORD=
 
 # 可选 / Optional
 ADMIN_IDS=123456789,987654321
@@ -407,9 +434,31 @@ git push heroku main
 heroku logs --tail
 ```
 
-### Docker 部署
+### Docker Compose 部署（推荐）
 
-创建 `Dockerfile`:
+项目已包含 `docker-compose.yml` 配置文件，支持 Redis Stack：
+
+```bash
+# 启动所有服务（Redis + Bot）
+docker compose up -d
+
+# 查看运行状态
+docker compose ps
+
+# 查看日志
+docker compose logs -f
+
+# 停止服务
+docker compose down
+```
+
+Docker Compose 会自动启动：
+- **Redis Stack**: 包含 RedisJSON, RedisSearch 等模块
+- **Telegram Bot**: 自动连接到 Redis 服务
+
+### Docker 单独部署
+
+如果只需要部署机器人，创建 `Dockerfile`:
 ```dockerfile
 FROM python:3.9-slim
 
