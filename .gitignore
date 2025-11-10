@@ -24,12 +24,7 @@ wheels/
 venv/
 env/
 ENV/
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-data.db
+.venv
 
 # IDE
 .vscode/
@@ -38,10 +33,17 @@ data.db
 *.swo
 *~
 
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# Docker
+docker-compose.override.yml
+
 # OS
 .DS_Store
 Thumbs.db
-
-# Local development
-quick.json
-*.log
