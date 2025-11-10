@@ -1,3 +1,5 @@
+Flask
+pyTelegramBotAPI
 pyTelegramBotAPI
 Flask
 Flask
