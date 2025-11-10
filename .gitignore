@@ -19,6 +19,25 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+data.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
 
 # Virtual environments
 venv/
@@ -32,6 +51,7 @@ ENV/
 *.swp
 *.swo
 *~
+.DS_Store
 
 # Environment variables
 .env
@@ -41,6 +61,16 @@ ENV/
 *.log
 logs/
 
+# Config files with sensitive data
+quick.json
+
+# Backup files
+*.backup
+*.bak
+
+# Temporary files
+/tmp/
+*.tmp
 # Docker
 docker-compose.override.yml
 
