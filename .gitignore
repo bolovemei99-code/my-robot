@@ -103,5 +103,7 @@ docker-compose.override.yml
 .DS_Store
 Thumbs.db
 
+# Environment variables
+.env
 # Configuration
 *.json
