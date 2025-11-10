@@ -4,4 +4,3 @@ pyTelegramBotAPI
 mcp-server
 requests
 redis>=5.0.0
-rejson>=0.5.6
