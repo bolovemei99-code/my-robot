@@ -1,3 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+data.db
+quick.json
 # Python
 __pycache__/
 *.py[cod]

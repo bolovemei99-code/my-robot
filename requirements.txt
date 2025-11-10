@@ -1,3 +1,7 @@
+Flask
+pyTelegramBotAPI
+mcp-server
+requests
 pyTelegramBotAPI
 Flask
 requests

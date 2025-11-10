@@ -4,6 +4,11 @@ from telebot import types
 import os
 import sqlite3
 import re
+import requests
+from datetime import datetime
+
+app = Flask(__name__)
+TOKEN = os.getenv('TG_TOKEN')
 import json
 import requests
 from datetime import datetime
@@ -202,6 +207,37 @@ def webhook():
     bot.process_new_updates([telebot.types.Update.de_json(update)])
     return '', 200
 
+# MCP AI 聊天
+@bot.message_handler(commands=['mcp'])
+def mcp_chat(message):
+    query = ' '.join(message.text.split()[1:]) or "你好"
+    try:
+        response = requests.post(
+            "http://localhost:8000/v1/chat/completions",
+            json={"messages": [{"role": "user", "content": query}]},
+            timeout=10
+        )
+        reply = response.json().get("choices", [{}])[0].get("message", {}).get("content", "AI 思考中...")
+        bot.reply_to(message, f"MCP: {reply}")
+    except Exception as e:
+        bot.reply_to(message, f"MCP 错误: {str(e)}")
+
+# 自动回复
+@bot.message_handler(content_types=['text'])
+def auto_reply(message):
+    text = message.text.lower()
+    user_id = message.from_user.id
+    # 正则匹配金额格式（如 10.5 或 10）
+    if match := re.match(r'^\d+(\.\d+)?$', text):
+        amount = float(match.group())
+        c.execute("INSERT INTO accounts VALUES (?, ?, ?, ?)", (user_id, amount, '自动记账', '17:18'))
+        db.commit()
+        bot.reply_to(message, f"✅ 自动记 {amount} | 17:18 +07")
+    # 快捷回复
+    elif trigger := next((k for k in QUICK if k in text), None):
+        bot.reply_to(message, QUICK[trigger])
+    else:
+        bot.reply_to(message, "发送 /help 或金额试试！")
 @app.route('/')
 def index():
     return 'Bot is running!', 200
@@ -687,6 +723,13 @@ def auto_reply(message):
 # 帮助命令（增强版）
 @bot.message_handler(commands=['help'])
 def help_cmd(message):
+    bot.reply_to(message, "🎉 命令: /mcp 你好 (AI对话) /add 10 午饭 /sub 5 咖啡 /balance /setquick hi 你好 /getquick /mass 123 消息 /kick /ban /template 欢迎 {name} /help")
+
+if __name__ == "__main__":
+    bot.remove_webhook()
+    bot.set_webhook(url=f"https://{os.getenv('RAILWAY_STATIC_URL')}/webhook")
+    print("MCP Bot 启动！")
+    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 8080)))
     save_user(message.from_user)
     help_text = """
 📖 机器人帮助
