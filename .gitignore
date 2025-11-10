@@ -8,6 +8,10 @@ __pycache__/
 *.egg-info/
 dist/
 build/
+.env
+.venv
+venv/
+ENV/
 data.db
 quick.json
 # Python

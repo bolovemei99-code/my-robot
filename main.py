@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import telebot
 from telebot import types
 import os
+from flask import Flask, request
 import sqlite3
 import re
 import requests
@@ -9,6 +10,10 @@ from datetime import datetime
 
 app = Flask(__name__)
 TOKEN = os.getenv('TG_TOKEN')
+WEBHOOK_URL = os.getenv('RAILWAY_PUBLIC_DOMAIN', '')
+
+bot = telebot.TeleBot(TOKEN)
+app = Flask(__name__)
 import json
 import requests
 from datetime import datetime
@@ -894,6 +899,33 @@ if bot:
     def help_cmd(message):
         bot.reply_to(message, "🎉 命令: /add 10 午饭 /sub 5 咖啡 /balance /setquick hi 你好 /getquick /mass 123 消息 /kick /ban /template 欢迎 {name} /help")
 
+@app.route('/' + TOKEN, methods=['POST'])
+def webhook():
+    if request.headers.get('content-type') == 'application/json':
+        json_string = request.get_data().decode('utf-8')
+        update = telebot.types.Update.de_json(json_string)
+        bot.process_new_updates([update])
+        return '', 200
+    else:
+        return '', 403
+
+@app.route('/setWebhook', methods=['GET'])
+def set_webhook():
+    webhook_url = f"https://{WEBHOOK_URL}/{TOKEN}"
+    result = bot.set_webhook(url=webhook_url)
+    if result:
+        return f"Webhook set to {webhook_url}", 200
+    else:
+        return "Failed to set webhook", 500
+
+@app.route('/')
+def index():
+    return "Telegram Bot is running!", 200
+
+if __name__ == '__main__':
+    print("Telegram 机器人已启动！")
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
 if __name__ == "__main__":
     # Set up bot webhook if bot is initialized and RAILWAY_STATIC_URL is set
     if bot and os.getenv('RAILWAY_STATIC_URL'):
