@@ -1,1 +1,15 @@
 aiogram==3.13.1
+Flask
+pyTelegramBotAPI
+pyTelegramBotAPI
+Flask
+Flask
+Flask
+pyTelegramBotAPI
+pyTelegramBotAPI
+mcp-server
+requests
+pyTelegramBotAPI
+Flask
+requests
+Flask
