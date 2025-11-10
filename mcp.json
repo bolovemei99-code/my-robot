@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "local-llm": {
+      "command": "python",
+      "args": ["-m", "mcp_server", "--model", "llama3"],
+      "env": {
+        "OLLAMA_HOST": "http://localhost:11434"
+      }
+    },
+    "grok-api": {
+      "url": "https://api.x.ai/v1/chat/completions",
+      "headers": {
+        "Authorization": "Bearer ${XAI_API_KEY}"
+      }
+    },
+    "openai-proxy": {
+      "url": "https://api.openai.com/v1/chat/completions",
+      "headers": {
+        "Authorization": "Bearer ${OPENAI_API_KEY}"
+      }
+    }
+  }
+}
