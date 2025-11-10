@@ -1,7 +1,7 @@
 import os
 
 # Load the TOKEN with os.environ
-TG_TOKEN = os.environ.get('TG_TOKEN')
+TG_TOKEN = os.environ.get('8328672714:AAG_MhB4AfquvQPDR2-_o4KFimZB9xE1NUA')
 
 # Use TG_TOKEN in the rest of the program instead of hardcoded tokens.
 
